@@ -1,10 +1,11 @@
-var lrsURL = "https://glass.waxlrs.com/TCAPI/statements";
-var userName = "Rn64adyD1CfS1fZq7DEJ";
-var password = "NlWDNSGKgTzMWP0tTrzm";
+
+var lrsURL = localStorage["LRSendPoint"];
+var endpoint = lrsURL +"/statements";
+var userName = localStorage["username"];
+var password = localStorage["password"];
+
 
 $(function(){
-	$( "#tabs" ).tabs();
-	
 	 chrome.tabs.getCurrent(function(tab)
 	{
 		chrome.tabs.query({active: true, currentWindow: true}, function(arrayOfTabs) {
@@ -36,27 +37,22 @@ $(function(){
 								}
 							};
 			 
-			 $("#debug").html(JSON.stringify(statement));
-			 $("#title").html(activeTab.title);
-			 $("#url").html(activeTab.url);
 			  if (!window.btoa) {
 				window.btoa = function (str) {
 					return Base64.encode(str);
 				}
 			}
 			var encodedPassword = btoa(userName+":"+password);
-			console.log(statement);
-			 $.ajax
-			({
+			 $.ajax({
 			  type: "POST",
-			  url: lrsURL,
+			  url: endpoint,
 			  async: true,
 			  headers: {"Authorization": "Basic "+encodedPassword},
 			  password: password,
 			  data: JSON.stringify(statement),
 			  contentType:"application/json; charset=utf-8",
 			  success: function (){
-				alert('Check your LRS'); 
+				$("#output").html("Success");
 			  },
 			   error: function( jqXHR, textStatus, errorThrown )
 			   {
