@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "I learned this",
+  "description": "This extension sends statements to an LRS.",
+  "version": "0.1",
+  "permissions": [
+    "tabs"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "main.html"
+  }
+}
