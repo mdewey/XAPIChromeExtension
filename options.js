@@ -2,15 +2,22 @@
 function save_options() {
   
     var LRSendPoint = document.getElementById("LRSendPoint").value;
-	localStorage["LRSendPoint"] = LRSendPoint;
-  
+	
 	var username = document.getElementById("username").value;
-	localStorage["username"] = username;
-  
+	
     var password = document.getElementById("password").value;
-	localStorage["password"] = password;
-
+	
+	var email = document.getElementById("email").value;
+	
+	var lrs = 
+	{
+		email : email,
+		endpoint : LRSendPoint,
+		username : username, 
+		password : password
+	};
   
+   setLRSFromStorage(lrs);
   
   // Update status to let user know options were saved.
   var status = document.getElementById("status");
@@ -22,9 +29,12 @@ function save_options() {
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
-	var LRSendPoint = localStorage["LRSendPoint"];
-	var username = localStorage["username"];
-	var password = localStorage["password"];
+	var lrs = getLRSFromStorage();
+
+	var LRSendPoint = lrs.endpoint;
+	var username = lrs.username;
+	var password = lrs.password;
+	var email = lrs.email;
 
 	console.log(LRSendPoint);
 	if (!(LRSendPoint === undefined || LRSendPoint == null))
@@ -33,6 +43,8 @@ function restore_options() {
 		document.getElementById("username").value = username;
 	if (!(password === undefined || password == null))
 		document.getElementById("password").value = password;
+	if (!(email === undefined || email == null))
+		document.getElementById("email").value = email;
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);

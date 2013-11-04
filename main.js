@@ -1,10 +1,3 @@
-
-var lrsURL = localStorage["LRSendPoint"];
-var endpoint = lrsURL +"/statements";
-var userName = localStorage["username"];
-var password = localStorage["password"];
-
-
 $(function(){
 	 chrome.tabs.getCurrent(function(tab)
 	{
@@ -13,10 +6,17 @@ $(function(){
 			 var title = activeTab.title;
 			 var url = activeTab.url;
 			
+			 var lrs = getLRSFromStorage();
+			 
+			 var email = lrs.email;
+			 var endpoint = lrs.endpoint +"/statements";
+		     var username = lrs.username;
+			 var password = lrs.password;
+		
 			 var statement = {
 								"actor": {
 									"objectType": "Agent", 
-									"mbox":"mailto:test@example.com" 
+									"mbox":"mailto:" + lrs.email
 								},
 								"verb" : { 
 									"id":"http://example.com/learned", 
@@ -42,7 +42,7 @@ $(function(){
 					return Base64.encode(str);
 				}
 			}
-			var encodedPassword = btoa(userName+":"+password);
+			var encodedPassword = btoa(username+":"+password);
 			 $.ajax({
 			  type: "POST",
 			  url: endpoint,
