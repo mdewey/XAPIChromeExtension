@@ -27,6 +27,17 @@ function save_options() {
   }, 750);
 }
 
+function addMore(){
+	var number = 1 + Math.floor(Math.random() * 6);
+	var removeButton = $("<button>").html("-").click(function() {
+		$(this).parent().remove();
+		
+	});
+	var anotherOne = $("<div class='parent'>").html(number +"!!").append(removeButton);
+	$("#container").append(anotherOne);
+	
+}
+
 // Restores select box state to saved value from localStorage.
 function restore_options() {
 	var lrs = getLRSFromStorage();
@@ -48,3 +59,4 @@ function restore_options() {
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
+document.querySelector('#addMore').addEventListener('click', addMore);
