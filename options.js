@@ -122,6 +122,7 @@ function restore_options() {
 		addOne();
 	}
 }
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
 document.querySelector('#addMore').addEventListener('click', addMore);

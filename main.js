@@ -6,6 +6,13 @@ $(function(){
 			 var title = activeTab.title;
 			 var url = activeTab.url;
 			
+			var allLRss = setAllLRSFromStorage();
+			
+			for (var i = 0; i < lrss.length; i++)
+			{
+				//TODO: make this thing
+				sendStatement(lrss[i]);
+			}
 			 var lrs = getLRSFromStorage();
 			 
 			 var email = lrs.email;
