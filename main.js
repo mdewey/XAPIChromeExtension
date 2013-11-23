@@ -49,34 +49,55 @@ function sendStatement(lrs, title, url)
 			$("#output").hide();
 			$("#success").show();
 			$("#success").append("&nbsp;|&nbsp;");
+			successCount++;
+			MonitorCompletion (successCount + errorCount)
+			
 		},
 		error: function( jqXHR, textStatus, errorThrown ){
 			console.log(jqXHR);
 			console.log(textStatus);
 			console.log(errorThrown);
+			$("#failed").show();
+			$("#failedCount").append("&nbsp;|&nbsp;");
+			errorCount++;
+			MonitorCompletion (successCount + errorCount)
+			errors.push(lrs);
+			var newLi = $("<li>").html(lrs.endpoint);
+			$("#errorList").append(newLi);
+			
+			
 		}
 	});
 }
 
+var successCount = 0;
+var errorCount = 0;
+var errors = [];
+var countOfLRS = 0;
+
+function MonitorCompletion(countDone)
+{
+	if (countDone === countOfLRS)
+	{
+		console.log("done");
+		$("#complete").show();
+	}
+}
+
 $(function(){
+	$("#showErrorButton").click(function() {console.log("got ehre"); $("#errors").toggle();});
 	chrome.tabs.getCurrent(function(tab){
 		chrome.tabs.query({active: true, currentWindow: true}, function(arrayOfTabs) {
 			var activeTab = arrayOfTabs[0];
 			var title = activeTab.title;
 			var url = activeTab.url;
-		
-			
 			var allLRss = getAllLRSFromStorage();
 			console.log(allLRss);
-				
+			countOfLRS = allLRss.length	
 			for (var i = 0; i < allLRss.length; i++)
 			{
-				//TODO: make this thing
-				console.log("sending to ");
-				console.log(allLRss[i]);
 				sendStatement(allLRss[i], title, url);
-			}
-			
+			}			
 		});
 	});
 });
