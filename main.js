@@ -94,10 +94,17 @@ $(function(){
 			var allLRss = getAllLRSFromStorage();
 			console.log(allLRss);
 			countOfLRS = allLRss.length	
-			for (var i = 0; i < allLRss.length; i++)
+			if(countOfLRS > 0)
 			{
-				sendStatement(allLRss[i], title, url);
-			}			
+				for (var i = 0; i < allLRss.length; i++)
+				{
+					sendStatement(allLRss[i], title, url);
+				}			
+			}
+			else
+			{
+				$("#output").html("Please go the options and fill in an LRS to track what you are learning");
+			}
 		});
 	});
 });
